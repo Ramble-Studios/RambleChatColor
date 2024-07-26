@@ -1,8 +1,8 @@
 gui:
-  colored-example-text: "this is just a sample text"
+  colored-example-text: "Este es un texto de ejemplo"
   open-sound: LEVEL_UP
   gui:
-    title: "&8Pick a ChatColor"
+    title: "       &0&nElije un color"
     rows: 6
   items:
     decoration1:

@@ -30,7 +30,8 @@ public class ChatColorGUI {
         Sound sound = null;
         try {
             sound = Sound.valueOf(openSoundStr);
-        } catch (IllegalArgumentException | NullPointerException ignored){}
+        } catch (IllegalArgumentException | NullPointerException ignored){
+        }
 
         GuiBuilder builder = new GuiBuilder()
                 .setRows(file.getInt("gui.gui.rows"))
@@ -48,7 +49,7 @@ public class ChatColorGUI {
                     Placeholders.setPlaceholders(actionsStr, null, player)
             );
 
-            if(slots.size() > 0){
+            if(!slots.isEmpty()){
                 for(int s: slots){
                     builder = builder.setGuiItem(s, Util.getItemFromConfig(file, key), actions);
                 }

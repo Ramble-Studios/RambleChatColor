@@ -5,11 +5,8 @@ import me.mattyhd0.chatcolor.configuration.ConfigurationManager;
 import me.mattyhd0.chatcolor.configuration.SimpleYMLConfiguration;
 import me.mattyhd0.chatcolor.gui.GuiListener;
 import me.mattyhd0.chatcolor.pattern.manager.PatternManager;
-import me.mattyhd0.chatcolor.updatechecker.UpdateChecker;
 import me.mattyhd0.chatcolor.util.Util;
-import me.mattyhd0.chatcolor.util.Version;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.command.ConsoleCommandSender;
 import me.mattyhd0.chatcolor.placeholderapi.ChatColorPlaceholders;
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,23 +30,21 @@ public class ChatColorPlugin extends JavaPlugin {
     private static ChatColorPlugin INSTANCE;
     private PatternManager patternManager;
     private ConfigurationManager configurationManager;
-    private List<String> supportedPlugins = new ArrayList<>();
+    private final List<String> supportedPlugins = new ArrayList<>();
 
     private String prefix;
-    private Metrics metrics;
     private Connection mysqlConnection;
-    private HashMap<UUID,CPlayer> dataMap = new HashMap<>();
+    private final HashMap<UUID, CPlayer> dataMap = new HashMap<>();
 
     public void onEnable() {
         ChatColorPlugin.INSTANCE = this;
         prefix = Util.color("&8[&4&lC&c&lh&6&la&e&lt&2&lC&a&lo&b&ll&3&lo&1&lr&8]");
         Bukkit.getConsoleSender().sendMessage(Util.color(prefix+" &7Enabling ChatColor v" + this.getDescription().getVersion()));
-        metrics = new Metrics(this, 11648);
+        Metrics metrics = new Metrics(this, 11648);
         saySupport("PlaceholderAPI");
         reload();
         setupListeners();
         setupCommands();
-        updateChecker(this, 93186);
         setupPlaceholderAPI();
     }
 
@@ -115,31 +110,6 @@ public class ChatColorPlugin extends JavaPlugin {
         }
     }
 
-    private void updateChecker(Plugin plugin, int spigotId) {
-        if (ChatColorPlugin.getInstance().getConfigurationManager().getConfig().getBoolean("config.update-checker")) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this,()-> {
-                UpdateChecker updateChecker = new UpdateChecker(plugin, spigotId);
-                ConsoleCommandSender console = Bukkit.getConsoleSender();
-                if (updateChecker.requestIsValid()) {
-                    if (updateChecker.isRunningLatestVersion()) {
-                        String message = Util.color(prefix+" &7You are using the latest version of ChatColor!");
-                        console.sendMessage(message);
-                    } else {
-                        String message = Util.color(prefix+" &7You are using version &a" + updateChecker.getVersion() + "&7 and the latest version is &a" + updateChecker.getLatestVersion());
-                        String message2 = Util.color(prefix+" &7You can download the latest version at: &a" + updateChecker.getSpigotResource().getDownloadUrl());
-                        console.sendMessage(message);
-                        console.sendMessage(message2);
-                    }
-                } else {
-                    String message = Util.color(prefix+" &7Could not verify if you are using the latest version of ChatColor :(");
-                    String message2 = Util.color(prefix+" &7You can disable update checker in config.yml file");
-                    console.sendMessage(message);
-                    console.sendMessage(message2);
-                }
-            }, 20 * 30,20 * 60 * 60 * 24);
-        }
-    }
-
     public void saySupport(String plugin){
 
         boolean support = Bukkit.getPluginManager().getPlugin(plugin) != null;
@@ -181,7 +151,18 @@ public class ChatColorPlugin extends JavaPlugin {
             );
 
             Statement statement = mysqlConnection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS playerdata ( uuid varchar(36) NOT NULL, pattern varchar(45) NOT NULL, PRIMARY KEY (uuid) );");
+            statement.execute(
+                    "CREATE TABLE IF NOT EXISTS playerdata (" +
+                            "uuid VARCHAR(36) NOT NULL, " +
+                            "pattern VARCHAR(45) NOT NULL, " +
+                            "bold BOOLEAN NOT NULL DEFAULT FALSE, " +
+                            "strikethrough BOOLEAN NOT NULL DEFAULT FALSE, " +
+                            "underline BOOLEAN NOT NULL DEFAULT FALSE, " +
+                            "italic BOOLEAN NOT NULL DEFAULT FALSE, " +
+                            "obfuscated BOOLEAN NOT NULL DEFAULT FALSE, " +
+                            "PRIMARY KEY (uuid)" +
+                            ");"
+            );
 
         } catch (SQLException e){
             Bukkit.getServer().getConsoleSender().sendMessage(
