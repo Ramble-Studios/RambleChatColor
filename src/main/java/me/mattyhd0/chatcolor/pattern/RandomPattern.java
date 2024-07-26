@@ -1,5 +1,6 @@
 package me.mattyhd0.chatcolor.pattern;
 
+import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.pattern.api.BasePattern;
 import me.mattyhd0.chatcolor.pattern.format.TextFormatOptions;
 import me.mattyhd0.chatcolor.util.Util;
@@ -12,7 +13,7 @@ public class RandomPattern extends BasePattern {
     }
 
     @Override
-    public String getText(String text) {
+    public String getText(CPlayer player, String text) {
 
         StringBuilder finalString = new StringBuilder();
 
@@ -26,8 +27,25 @@ public class RandomPattern extends BasePattern {
             finalString.append(randomColor).append(character);
 
         }
-
-        return Util.color(finalString.toString());
+        String fs = finalString.toString();
+        if (player != null) {
+            if (player.isBold()) {
+                fs = ChatColor.BOLD + fs;
+            }
+            if (player.isStrikethrough()) {
+                fs = ChatColor.STRIKETHROUGH + fs;
+            }
+            if (player.isUnderline()) {
+                fs = ChatColor.UNDERLINE + fs;
+            }
+            if (player.isItalic()) {
+                fs = ChatColor.ITALIC + fs;
+            }
+            if (player.isObfuscated()) {
+                fs = ChatColor.MAGIC + fs;
+            }
+        }
+        return Util.color(fs);
     }
 
 }

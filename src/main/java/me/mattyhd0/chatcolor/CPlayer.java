@@ -1,6 +1,7 @@
 package me.mattyhd0.chatcolor;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.mattyhd0.chatcolor.configuration.SimpleYMLConfiguration;
 import me.mattyhd0.chatcolor.pattern.api.BasePattern;
 import me.mattyhd0.chatcolor.util.Util;
@@ -15,22 +16,32 @@ public class CPlayer {
     public Player player;
     private String lastMessage = null;
 
-    @Getter
+    @Getter @Setter
     private BasePattern pattern;
-    @Getter
+    @Getter @Setter
     private boolean bold; // l
-    @Getter
+    @Getter @Setter
     private boolean italic; // o
-    @Getter
+    @Getter @Setter
     private boolean obfuscated; // k
-    @Getter
+    @Getter @Setter
     private boolean underline; // n
-    @Getter
+    @Getter @Setter
     private boolean strikethrough ; // m
 
-    public CPlayer(Player player, BasePattern basePattern){
+    public CPlayer(Player player, BasePattern pattern) {
+        this.pattern = pattern;
         this.player = player;
-        this.pattern = basePattern;
+    }
+
+    public CPlayer(Player player, BasePattern pattern, boolean strikethrough, boolean underline, boolean obfuscated, boolean italic, boolean bold) {
+        this.strikethrough = strikethrough;
+        this.pattern = pattern;
+        this.underline = underline;
+        this.obfuscated = obfuscated;
+        this.italic = italic;
+        this.bold = bold;
+        this.player = player;
     }
 
     public void disablePattern(){
@@ -62,11 +73,23 @@ public class CPlayer {
                             "DELETE FROM playerdata WHERE uuid=?");
                     statement.setString(1, player.getUniqueId().toString());
                 } else {
+                    // Preparamos el SQL para insertar o actualizar con los nuevos campos
                     statement = ChatColorPlugin.getInstance().getMysqlConnection().prepareStatement(
-                            "INSERT INTO playerdata(uuid, pattern) VALUES(?,?) ON DUPLICATE KEY UPDATE pattern= VALUES(pattern)");
+                            "INSERT INTO playerdata(uuid, pattern, bold, strikethrough, underline, italic, obfuscated) " +
+                                    "VALUES(?, ?, ?, ?, ?, ?, ?) " +
+                                    "ON DUPLICATE KEY UPDATE pattern=VALUES(pattern), bold=VALUES(bold), strikethrough=VALUES(strikethrough), " +
+                                    "underline=VALUES(underline), italic=VALUES(italic), obfuscated=VALUES(obfuscated)");
+
+                    // Establecemos los valores de los parámetros
                     statement.setString(1, player.getUniqueId().toString());
                     statement.setString(2, getPattern().getName(false));
+                    statement.setBoolean(3, isBold());
+                    statement.setBoolean(4, isStrikethrough());
+                    statement.setBoolean(5, isUnderline());
+                    statement.setBoolean(6, isItalic());
+                    statement.setBoolean(7, isObfuscated());
                 }
+
                 statement.executeUpdate();
                 statement.close();
             } catch (SQLException e) {

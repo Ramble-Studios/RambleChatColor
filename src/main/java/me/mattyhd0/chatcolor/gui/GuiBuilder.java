@@ -131,7 +131,6 @@ public class GuiBuilder {
         }
 
         for(Map.Entry<Integer, ItemStack> entry: guiItems.entrySet()){
-
             try {
                 gui.setItem(entry.getKey(), entry.getValue());
             } catch (ArrayIndexOutOfBoundsException exception){

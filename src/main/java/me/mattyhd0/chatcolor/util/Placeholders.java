@@ -1,6 +1,7 @@
 package me.mattyhd0.chatcolor.util;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.ChatColorPlugin;
 import me.mattyhd0.chatcolor.pattern.api.BasePattern;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,10 +17,10 @@ public class Placeholders {
         FileConfiguration config = ChatColorPlugin.getInstance().getConfigurationManager().getGui();
 
         if(pattern != null){
-
+            CPlayer cplayer = ChatColorPlugin.getInstance().getDataMap().get(player.getUniqueId());
             text = text.replaceAll("\\{pattern_name}", pattern.getName(false))
                     .replaceAll("\\{pattern_name_formatted}", pattern.getName(true))
-                    .replaceAll("\\{example_text}", pattern.getText(config.getString("gui.colored-example-text")));
+                    .replaceAll("\\{example_text}", pattern.getText(cplayer, config.getString("gui.colored-example-text")));
 
         }
 

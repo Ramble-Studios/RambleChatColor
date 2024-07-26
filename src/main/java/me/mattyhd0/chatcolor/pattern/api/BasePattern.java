@@ -1,5 +1,6 @@
 package me.mattyhd0.chatcolor.pattern.api;
 
+import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.pattern.format.TextFormatOptions;
 import net.md_5.bungee.api.ChatColor;
 
@@ -27,7 +28,7 @@ public abstract class BasePattern {
         textFormatOptions = formatOptions;
     }
 
-    public abstract String getText(String text);
+    public abstract String getText(CPlayer player, String text);
 
     public void setName(String name) {
         this.name = name;
@@ -35,7 +36,7 @@ public abstract class BasePattern {
 
     public String getName(boolean formatted){
         if(formatted){
-            return getText(name);
+            return getText(null, name);
         }
         return name;
     }

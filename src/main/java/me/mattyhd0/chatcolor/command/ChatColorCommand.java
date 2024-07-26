@@ -40,13 +40,7 @@ public class ChatColorCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         if (!(arg.length > 0)) {
-
-            if(config.getBoolean("config.use-main-command-as-gui")){
-                gui(player, new String[]{ "gui" });
-                return true;
-            }
-
-            unknownCommand(player);
+            gui(player, new String[]{ "gui" });
             return true;
         }
 
@@ -54,14 +48,8 @@ public class ChatColorCommand implements CommandExecutor, TabCompleter {
             setPattern(player, arg);
         } else if (arg[0].equalsIgnoreCase("list")) {
             list(player, arg);
-        } else if (arg[0].equalsIgnoreCase("disable")) {
+        } else if (arg[0].equalsIgnoreCase("restaurar")) {
             disable(player, arg);
-        } else if (arg[0].equalsIgnoreCase("gui")) {
-            gui(player, arg);
-        } else if (arg[0].equalsIgnoreCase("help")) {
-            help(player, arg);
-        } else {
-            unknownCommand(player);
         }
 
         return true;

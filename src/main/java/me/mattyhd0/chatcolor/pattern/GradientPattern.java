@@ -1,5 +1,6 @@
 package me.mattyhd0.chatcolor.pattern;
 
+import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.pattern.api.BasePattern;
 import me.mattyhd0.chatcolor.pattern.format.TextFormatOptions;
 import net.md_5.bungee.api.ChatColor;
@@ -15,14 +16,14 @@ public class GradientPattern extends BasePattern {
     }
 
     @Override
-    public String getText(String text) {
+    public String getText(CPlayer player, String text) {
         try {
-            return gradient(text, getColors(), getTextFormatOptions());
+            return gradient(player, text, getColors(), getTextFormatOptions());
         } catch (NoSuchMethodError ignored){}
         return text;
     }
 
-    private String gradient(String text, ChatColor start, ChatColor end, TextFormatOptions formatOptions){
+    private String gradient(CPlayer player, String text, ChatColor start, ChatColor end, TextFormatOptions formatOptions){
 
         Color color1 = start.getColor();
         Color color2 = end.getColor();
@@ -56,11 +57,28 @@ public class GradientPattern extends BasePattern {
             index++;
         }
 
-        return newText.toString();
+        String fs = newText.toString();
+        if (player != null) {
+            if (player.isBold()) {
+                fs = ChatColor.BOLD + fs;
+            }
+            if (player.isStrikethrough()) {
+                fs = ChatColor.STRIKETHROUGH + fs;
+            }
+            if (player.isUnderline()) {
+                fs = ChatColor.UNDERLINE + fs;
+            }
+            if (player.isItalic()) {
+                fs = ChatColor.ITALIC + fs;
+            }
+            if (player.isObfuscated()) {
+                fs = ChatColor.MAGIC + fs;
+            }
+        }
+        return fs;
     }
 
-    public String gradient(String text, List<ChatColor> colors, TextFormatOptions formatOptions){
-
+    public String gradient(CPlayer player, String text, List<ChatColor> colors, TextFormatOptions formatOptions){
         int divisions = colors.size()-1;
         float divideEveryChars = text.length()/divisions > 0 ? (float)text.length()/divisions : 1;
         List<String> substrings = new ArrayList<>();
@@ -95,7 +113,7 @@ public class GradientPattern extends BasePattern {
             }
 
             finalText.append(
-                    gradient(s,
+                    gradient(player, s,
                             color1,
                             color2,
                             formatOptions

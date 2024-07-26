@@ -1,5 +1,6 @@
 package me.mattyhd0.chatcolor.gui;
 
+import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.ChatColorPlugin;
 import me.mattyhd0.chatcolor.configuration.ConfigurationManager;
 import me.mattyhd0.chatcolor.gui.clickaction.api.GuiClickAction;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChatColorGUI {
 
@@ -37,6 +39,45 @@ public class ChatColorGUI {
                 .setRows(file.getInt("gui.gui.rows"))
                 .setTitle(file.getString("gui.gui.title"));
 
+        for(String key : file.getConfigurationSection("gui.decorations").getKeys(false)){
+            String orgKey = key;
+            key = "gui.decorations."+key;
+            String itemSection = "has-not-permission";
+            if(player.hasPermission(Objects.requireNonNull(file.getString(key + ".permission")))){
+                CPlayer cPlayer = ChatColorPlugin.getInstance().getDataMap().get(player.getUniqueId());
+                switch (orgKey){
+                    case "bold":
+                        itemSection = cPlayer.isBold() ? "enabled" : "disabled";
+                        break;
+                    case "underline":
+                        itemSection = cPlayer.isUnderline() ? "enabled" : "disabled";
+                        break;
+                    case "italic":
+                        itemSection = cPlayer.isItalic() ? "enabled" : "disabled";
+                        break;
+                    case "strikethrough":
+                        itemSection = cPlayer.isStrikethrough() ? "enabled" : "disabled";
+                        break;
+                    case "obfuscated":
+                        itemSection = cPlayer.isObfuscated() ? "enabled" : "disabled";
+                        break;
+                    default: itemSection = "has-not-permission";
+                }
+            }
+
+            int slot = file.getInt(key+"."+itemSection+".slot");
+            List<String> actionsStr = file.getStringList(key+"."+itemSection+".actions");
+
+            List<GuiClickAction> actions = GuiClickActionManager.getClickActionsFromList(
+                    actionsStr
+            );
+
+            ItemStack itemStack = Util.getItemFromConfig(file, key+"."+itemSection);
+
+            builder = builder.setGuiItem(slot, itemStack, actions);
+        }
+
+
         for(String key : file.getConfigurationSection("gui.items").getKeys(false)){
 
             key = "gui.items."+key;
@@ -58,8 +99,6 @@ public class ChatColorGUI {
             }
 
         }
-
-
 
         for(BasePattern pattern : ChatColorPlugin.getInstance().getPatternManager().getAllPatterns()){
 

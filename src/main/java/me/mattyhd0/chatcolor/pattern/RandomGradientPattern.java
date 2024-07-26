@@ -1,5 +1,6 @@
 package me.mattyhd0.chatcolor.pattern;
 
+import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.pattern.format.TextFormatOptions;
 import net.md_5.bungee.api.ChatColor;
 
@@ -13,10 +14,10 @@ public class RandomGradientPattern extends GradientPattern {
     }
 
     @Override
-    public String getText(String text) {
+    public String getText(CPlayer player, String text) {
         List<ChatColor> colors = getColors();
         Collections.shuffle(colors);
-        return gradient(text, getColors(), getTextFormatOptions());
+        return gradient(player, text, getColors(), getTextFormatOptions());
     }
 
 }

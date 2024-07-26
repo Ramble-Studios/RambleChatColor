@@ -1,5 +1,6 @@
 package me.mattyhd0.chatcolor.gui.clickaction;
 
+import me.mattyhd0.chatcolor.ChatColorPlugin;
 import me.mattyhd0.chatcolor.gui.clickaction.api.GuiClickAction;
 import me.mattyhd0.chatcolor.util.Util;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class SendMessageAction implements GuiClickAction {
     @Override
     public void execute(Player player) {
 
-        player.sendMessage(Util.color(message));
+        player.sendMessage(Util.color(ChatColorPlugin.getInstance().getPrefix()+" "+message));
 
     }
 }

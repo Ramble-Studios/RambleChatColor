@@ -49,15 +49,35 @@ public class ChatListener implements EventExecutor {
 
                 boolean showPatternIfHasPerm = config.getBoolean("config.show-pattern-only-if-has-permissions");
                 String message = ChatColor.stripColor(event.getMessage());
-                String coloredMessage = pattern.getText(message);
+                String coloredMessage = pattern.getText(cPlayer, message);
 
                 if (showPatternIfHasPerm && cPlayer.canUsePattern(pattern)) {
                     event.setMessage(coloredMessage);
+                    return;
                 } else if (!showPatternIfHasPerm) {
                     event.setMessage(coloredMessage);
+                    return;
                 }
 
             }
+            String message = event.getMessage();
+            if (cPlayer.isBold()) {
+                message = ChatColor.BOLD + message;
+            }
+            if (cPlayer.isStrikethrough()) {
+                message = ChatColor.STRIKETHROUGH + message;
+            }
+            if (cPlayer.isUnderline()) {
+                message = ChatColor.UNDERLINE + message;
+            }
+            if (cPlayer.isItalic()) {
+                message = ChatColor.ITALIC + message;
+            }
+            if (cPlayer.isObfuscated()) {
+                message = ChatColor.MAGIC + message;
+            }
+            event.setMessage(message);
+
 
             cPlayer.setLastMessages(event.getMessage());
 

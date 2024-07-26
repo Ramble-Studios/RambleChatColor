@@ -4,6 +4,267 @@ gui:
   gui:
     title: "       &0&nElije un color"
     rows: 6
+  decorations:
+    bold:
+      permission: 'chatcolor.color.leyenda'
+      enabled:
+        material: LIME_DYE
+        slot: 47
+        amount: 1
+        name: "&a&lNegrita"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para dejar de usar!'
+        actions:
+          - 'TOGGLE-DECORATION:bold'
+          - 'MESSAGE:&7Ya no escribirás en &lnegrita&r&7.'
+          - 'CLOSE-INVENTORY'
+      disabled:
+        slot: 47
+        amount: 1
+        material: GRAY_DYE
+        name: "&c&lNegrita"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para activar negrita!'
+        actions:
+          - 'TOGGLE-DECORATION:bold'
+          - 'MESSAGE:&7Ahora escribes en &lnegrita&r&7.'
+          - 'CLOSE-INVENTORY'
+      has-not-permission:
+        slot: 47
+        material: BARRIER
+        amount: 1
+        name: '&c&lNegrita'
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&c¡Debes tener rango &6&lLEYENDA &co superior!'
+        actions:
+          - 'MESSAGE:&c¡Debe stener rango &6&lLEYENDA&c o superior para poder usar esta decoración!'
+          - 'CLOSE-INVENTORY'
+    underline:
+      permission: 'chatcolor.color.heroe'
+      enabled:
+        material: LIME_DYE
+        amount: 1
+        slot: 48
+        name: "&a&nSubrayado"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para dejar de usar!'
+        actions:
+          - 'TOGGLE-DECORATION:underline'
+          - 'MESSAGE:&7Ya no escribirás en &nsubrayado&r&7.'
+          - 'CLOSE-INVENTORY'
+      disabled:
+        material: GRAY_DYE
+        amount: 1
+        slot: 48
+        name: "&c&nSubrayado"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para activar subrayado!'
+        actions:
+          - 'TOGGLE-DECORATION:underline'
+          - 'MESSAGE:&7Ahora escribes en &nsubrayado&r&7.'
+          - 'CLOSE-INVENTORY'
+      has-not-permission:
+        material: BARRIER
+        slot: 48
+        amount: 1
+        name: '&c&nSubrayado'
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&c¡Debes tener rango &x&f&f&7&5&b&6&lHÉROE &co superior!'
+        actions:
+          - 'MESSAGE:&c¡Debe stener rango &x&f&f&7&5&b&6&lHÉROE&c o superior para poder usar esta decoración!'
+          - 'CLOSE-INVENTORY'
+    italic:
+      permission: 'chatcolor.color.heroe'
+      enabled:
+        material: LIME_DYE
+        slot: 49
+        amount: 1
+        name: "&a&oCursiva"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para dejar de usar!'
+        actions:
+          - 'TOGGLE-DECORATION:italic'
+          - 'MESSAGE:&7Ya no escribirás en &ocursiva&r&7.'
+          - 'CLOSE-INVENTORY'
+      disabled:
+        amount: 1
+        material: GRAY_DYE
+        slot: 49
+        name: "&c&oCursiva"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para activar cursiva!'
+        actions:
+          - 'TOGGLE-DECORATION:italic'
+          - 'MESSAGE:&7Ahora escribes en &ocursiva&r&7.'
+          - 'CLOSE-INVENTORY'
+      has-not-permission:
+        material: BARRIER
+        slot: 49
+        amount: 1
+        name: '&c&oCursiva'
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&c¡Debes tener rango &x&f&f&7&5&b&6&lHÉROE &co superior!'
+        actions:
+          - 'MESSAGE:&c¡Debe stener rango &x&f&f&7&5&b&6&lHÉROE&c o superior para poder usar esta decoración!'
+          - 'CLOSE-INVENTORY'
+    obfuscated:
+      permission: 'chatcolor.color.heroe'
+      enabled:
+        material: LIME_DYE
+        slot: 50
+        amount: 1
+        name: "&a&kp &r&aOfuscado &kp"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para dejar de usar!'
+        actions:
+          - 'TOGGLE-DECORATION:obfuscated'
+          - 'MESSAGE:&7Ya no escribirás en &kp &r&aOfuscado &rp&r&7.'
+          - 'CLOSE-INVENTORY'
+      disabled:
+        amount: 1
+        material: GRAY_DYE
+        slot: 50
+        name: "&c&kp &r&cOfuscado &kp"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para activar ofuscado!'
+        actions:
+          - 'TOGGLE-DECORATION:obfuscated'
+          - 'MESSAGE:&7Ahora escribes en &kp &r&aOfuscado &rp&r&7.'
+          - 'CLOSE-INVENTORY'
+      has-not-permission:
+        material: BARRIER
+        amount: 1
+        slot: 50
+        name: '&c&kp &r&aOfuscado &rp'
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&c¡Debes tener rango &x&f&f&7&5&b&6&lHÉROE &co superior!'
+        actions:
+          - 'MESSAGE:&c¡Debe stener rango &x&f&f&7&5&b&6&lHÉROE&c o superior para poder usar esta decoración!'
+          - 'CLOSE-INVENTORY'
+    strikethrough:
+      permission: 'chatcolor.color.leyenda'
+      enabled:
+        amount: 1
+        material: LIME_DYE
+        slot: 51
+        name: "&a&mTachado"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para dejar de usar!'
+        actions:
+          - 'TOGGLE-DECORATION:strikethrough'
+          - 'MESSAGE:&7Ya no escribirás en &mtachado&r&7.'
+          - 'CLOSE-INVENTORY'
+      disabled:
+        material: GRAY_DYE
+        amount: 1
+        slot: 51
+        name: "&c&mTachado"
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&e▸ ¡Click para activar tachado!'
+        actions:
+          - 'TOGGLE-DECORATION:strikethrough'
+          - 'MESSAGE:&7Ahora escribes en &mtachado&r&7.'
+          - 'CLOSE-INVENTORY'
+      has-not-permission:
+        material: BARRIER
+        amount: 1
+        slot: 51
+        name: '&c&mTachado'
+        lore:
+          - '&8Decoración de texto'
+          - ''
+          - '&f Esta es una decoración para el chat'
+          - '&f Esta decoración se vería tal que así:'
+          - '&7 {example_text}'
+          - ''
+          - '&c¡Debes tener rango &6&lLEYENDA &co superior!'
+        actions:
+          - 'MESSAGE:&c¡Debe stener rango &6&lLEYENDA&c o superior para poder usar esta decoración!'
+          - 'CLOSE-INVENTORY'
   items:
     decoration1:
       material: GRAY_STAINED_GLASS_PANE
@@ -57,11 +318,6 @@ gui:
         - 44
         - 45
         - 46
-        - 47
-        - 48
-        - 49
-        - 50
-        - 51
         - 52
         - 53
     decoration2:
@@ -88,19 +344,19 @@ gui:
         - 44
         - 45
         - 46
-        - 47
-        - 48
-        - 49
-        - 50
-        - 51
         - 52
         - 53
     example-item:
       material: BARRIER
-      name: "&cUnequip"
+      name: "&cRestaurar"
       amount: 1
       lore:
-        - "&7Click to unequip your current pattern."
+        - '&8Opción del menú'
+        - ''
+        - '&f Usa este botón para quitar todos tus'
+        - '&f patrones y decoraciones de chat.'
+        - ''
+        - "&e▸ Click para desactivar configuración."
       #You can use as actions:
       #
       # MESSAGE:your message
@@ -113,4 +369,4 @@ gui:
         - "PLAYER-COMMAND:chatcolor disable"
         - "SOUND:ENTITY_PLAYER_LEVELUP 1 1"
         - "CLOSE-INVENTORY"
-      slot: 49
+      slot: 45

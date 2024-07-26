@@ -45,6 +45,10 @@ public class GuiClickActionManager {
 
             return new SetPatternAction(splitted[1]);
 
+        } else if (splitted[0].equals("TOGGLE-DECORATION")){
+
+            return new ToggleDecorationAction(splitted[1]);
+
         } else if (splitted[0].equals("CLOSE-INVENTORY")){
 
             return new CloseInventoryAction();

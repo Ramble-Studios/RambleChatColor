@@ -4,7 +4,6 @@ import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.ChatColorPlugin;
 import me.mattyhd0.chatcolor.configuration.SimpleYMLConfiguration;
 import me.mattyhd0.chatcolor.pattern.api.BasePattern;
-import me.mattyhd0.chatcolor.updatechecker.UpdateChecker;
 import me.mattyhd0.chatcolor.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -37,31 +36,6 @@ public class ConnectionListener implements Listener {
 
         Player player = event.getPlayer();
 
-        if (player.hasPermission("chatcolor.updatenotify") && ChatColorPlugin.getInstance().getConfigurationManager().getConfig().getBoolean("config.update-checker")) {
-            Bukkit.getScheduler().runTaskAsynchronously(ChatColorPlugin.getInstance(), () -> {
-                UpdateChecker updateChecker = new UpdateChecker(ChatColorPlugin.getInstance(), 93186);
-
-                if (!player.isOnline()) return;
-
-                if (updateChecker.requestIsValid()) {
-
-                    if (!updateChecker.isRunningLatestVersion()) {
-                        String message = ChatColor.translateAlternateColorCodes('&', "&8[&4&lC&c&lh&6&la&e&lt&2&lC&a&lo&b&ll&3&lo&1&lr&8] &7You are using version &a" + updateChecker.getVersion() + "&7 and the latest version is &a" + updateChecker.getLatestVersion());
-                        String message2 = ChatColor.translateAlternateColorCodes('&', "&8[&4&lC&c&lh&6&la&e&lt&2&lC&a&lo&b&ll&3&lo&1&lr&8] &7You can download the latest version at: &a" + updateChecker.getSpigotResource().getDownloadUrl());
-                        player.sendMessage(message);
-                        player.sendMessage(message2);
-                    }
-
-                } else {
-
-                    String message = ChatColor.translateAlternateColorCodes('&', "&8[&4&lC&c&lh&6&la&e&lt&2&lC&a&lo&b&ll&3&lo&1&lr&8] &7Could not verify if you are using the latest version of ChatColor :(");
-                    String message2 = ChatColor.translateAlternateColorCodes('&', "&8[&4&lC&c&lh&6&la&e&lt&2&lC&a&lo&b&ll&3&lo&1&lr&8] &7You can disable update checker in config.yml file");
-                    player.sendMessage(message);
-                    player.sendMessage(message2);
-
-                }
-            });
-        }
         if (playersBeingLoaded.containsKey(player.getUniqueId())) {
             playersBeingLoaded.remove(event.getPlayer().getUniqueId()).cancel();
         }
@@ -80,7 +54,15 @@ public class ConnectionListener implements Listener {
                         ResultSet resultSet = statement.executeQuery();
                         if (resultSet.next()) {
                             BasePattern basePattern = plugin.getPatternManager().getPatternByName(resultSet.getString("pattern"));
-                            plugin.getDataMap().put(player.getUniqueId(), new CPlayer(player, basePattern));
+                            plugin.getDataMap().put(player.getUniqueId(),
+                                    new CPlayer(
+                                            player, basePattern,
+                                            resultSet.getBoolean("strikethrough"),
+                                            resultSet.getBoolean("underline"),
+                                            resultSet.getBoolean("obfuscated"),
+                                            resultSet.getBoolean("italic"),
+                                            resultSet.getBoolean("bold")
+                                            ));
                         } else plugin.getDataMap().put(player.getUniqueId(), new CPlayer(player, null));
                     } catch (SQLException e) {
                         Bukkit.getServer().getConsoleSender().sendMessage(

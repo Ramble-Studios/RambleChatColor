@@ -1,5 +1,6 @@
 package me.mattyhd0.chatcolor.pattern;
 
+import me.mattyhd0.chatcolor.CPlayer;
 import me.mattyhd0.chatcolor.pattern.format.TextFormatOptions;
 import net.md_5.bungee.api.ChatColor;
 
@@ -11,8 +12,8 @@ public class LinearIgnoreSpacesPattern extends LinearPattern {
     }
 
     @Override
-    public String getText(String text) {
-        return super.getText(text);
+    public String getText(CPlayer player, String text) {
+        return super.getText(player, text);
     }
 
 }
